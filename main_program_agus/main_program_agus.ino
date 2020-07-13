@@ -27,15 +27,15 @@ const int rel1=11;
 //timer
 unsigned long time_0;
 unsigned long time_1;
-unsigned long interval_on=40;//40
-unsigned long interval_off=40;//20
+unsigned long interval_on=30;//40
+unsigned long interval_off=30;//20
 
 
 
 void setup() { 
   Serial.begin(9600); // Serial monitoring 
   //distance sensor
-  Serial.println("Keran otomatis");
+  Serial.println("distance,smooth,kalman");
   pinMode(T0, OUTPUT); // Initializing Trigger Output and Echo Input 
   pinMode(E0, INPUT_PULLUP);
   pinMode(T1, OUTPUT); // Initializing Trigger Output and Echo Input 
@@ -65,9 +65,9 @@ void loop(){
     if(con_0>interval_on){
       dstate_0=1;
       con_0=0;
-      Serial.print("keran1:on ");
-      //Serial.print(dstate_0);
-      Serial.print(" jarak: ");
+      Serial.print("keran 1 on ");
+      Serial.print(dstate_0);
+      Serial.print(" - ");
       Serial.println(kalman_0);
       digitalWrite(rel0,LOW);
     }
@@ -78,9 +78,9 @@ void loop(){
     if(cof_0>interval_off){
       dstate_0=0;
       cof_0=0;
-      Serial.print("keran1:off ");
-      //Serial.print(dstate_0);
-      Serial.print(" jarak: ");
+      Serial.print("keran 1 off ");
+      Serial.print(dstate_0);
+      Serial.print(" - ");
       Serial.println(kalman_0);
       digitalWrite(rel0,HIGH);
     }
@@ -93,9 +93,9 @@ void loop(){
     if(con_1>interval_on){
       dstate_1=1;
       con_1=0;
-      Serial.print("keran2:on ");
-      //Serial.print(dstate_1);
-      Serial.print(" jarak: ");
+      Serial.print("keran 2 on ");
+      Serial.print(dstate_1);
+      Serial.print(" - ");
       Serial.println(kalman_1);
       digitalWrite(rel1,LOW);
     }
@@ -106,9 +106,9 @@ void loop(){
     if(cof_1>interval_off){
       dstate_1=0;
       cof_1=0;
-      Serial.print("keran2:off  ");
-      //Serial.print(dstate_1);
-      Serial.print(" jarak: ");
+      Serial.print("keran 2 off ");
+      Serial.print(dstate_1);
+      Serial.print(" - ");
       Serial.println(kalman_1);
       digitalWrite(rel1,HIGH);
     }
@@ -129,9 +129,5 @@ int ukur_jarak(int TRIG,int ECHO){  //fungsi mengukur jarak
     distance= distance/58; //Convert the pulse duration to distance
                            //You can add other math functions to calibrate it well
     return distance;
-    delay(50);
+    delay(100);
 }
-
-
-
-
